@@ -5,5 +5,11 @@
 {% endblock%}
 
 {% block main %}
-    <p>{{ json }}</p>
+
+    {% for trip in output%}
+        <p>{{ trip }}: {{ output[trip] }}</p>
+
+    {% endfor%}
+    <br>
+    {{ trips }}
 {% endblock %}

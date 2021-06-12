@@ -29,7 +29,7 @@ def test_post_index_page():
     """
     with app.test_client() as client:
         response = client.post('/',
-                                data={'address1': 'YO32 9GX',
+                                json={'address1': 'YO32 9GX',
                                 'address2': 'YO10 3LF',
                                 'address3': 'YO1 7HH',
                                 'address4': 'YO1 9TJ',
@@ -37,5 +37,8 @@ def test_post_index_page():
                                 'key': 'YO31 8HY'},
                                 follow_redirects=True)
         assert response.status_code == 200
-        assert b'status\': \'OK' in response.data
+        json_data = response.get_json() (Force = True)
+        assert json_data # broken == None - the functions need to be broken out as the return val doesn't include the json
+        # need to break out the api lookup into another function more module.
+        assert json_data['status'] == "OK"
         
