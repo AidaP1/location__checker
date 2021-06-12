@@ -37,3 +37,5 @@ def test_post_index_page():
                                 'key': 'YO31 8HY'},
                                 follow_redirects=True)
         assert response.status_code == 200
+        assert b'status\': \'OK' in response.data
+        

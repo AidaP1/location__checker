@@ -1,7 +1,11 @@
 attrs==21.2.0
+certifi==2021.5.30
+chardet==4.0.0
 click==8.0.1
 coverage==5.5
 Flask==2.0.1
+-e git+https://github.com/AidaP1/location__checker.git@9521a1c2b6ce994b4e387b3701b037171ba0201c#egg=flaskr
+idna==2.10
 iniconfig==1.1.1
 itsdangerous==2.0.1
 Jinja2==3.0.1
@@ -11,5 +15,7 @@ pluggy==0.13.1
 py==1.10.0
 pyparsing==2.4.7
 pytest==6.2.4
+requests==2.25.1
 toml==0.10.2
+urllib3==1.26.5
 Werkzeug==2.0.1
