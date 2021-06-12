@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Location Lookup
+{% endblock %}
+
+{% block main %}
+    <h1>Quick Search</h1>
+    <p>
+        <ol>
+            <li>set up some lookup locations that you are interested in</li>
+            <li>enter a key location</li>
+            <li>find out how long it takes to get from your key to each of your lookups</li>
+        </ol>
+    </p>
+    <section>
+        <form method="post" action="">
+            <input name="address1" type="text" required placeholder="lookup address one">
+            <input name="address2" type="text" placeholder="lookup address two">
+            <input name="address3" type="text" placeholder="lookup address three">
+            <input name="address4" type="text" placeholder="lookup address four">
+            <input name="address5" type="text" placeholder="lookup address five">
+            <input name="key" type="text" placeholder="key location" required>
+
+            <button type="submit">Search</button>
+        </form>
+    </section>
+{% endblock %}
