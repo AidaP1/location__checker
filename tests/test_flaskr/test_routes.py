@@ -2,7 +2,7 @@
 This file (test_routes.py) contains the unit tests for the routes.py file.
 """
 from werkzeug.wrappers import response
-from flaskr import app
+from app import app
 
 
 def test_index_page():
