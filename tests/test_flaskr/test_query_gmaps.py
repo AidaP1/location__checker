@@ -70,7 +70,7 @@ def test_call_API_1_loc():
     data = call_API(query)
     assert data['status'] =='OK'
 
-def test_call_google():
+def test_call_google_5_loc():
     """
     GIVEN a set of 5 addresses and a key location
     WHEN the google maps API is called
@@ -85,4 +85,9 @@ def test_call_google():
 
     data = call_google(query)
     assert data != None
+    assert data['address1'] != None
+    assert data['address2'] != None
+    assert data['address3'] != None
+    assert data['address4'] != None
+    assert data['address5'] != None
     
