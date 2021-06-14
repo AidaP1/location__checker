@@ -85,9 +85,9 @@ def test_call_google_5_loc():
 
     data = call_google(query)
     assert data != None
-    assert data['address1'] != None
-    assert data['address2'] != None
-    assert data['address3'] != None
-    assert data['address4'] != None
-    assert data['address5'] != None
+    assert data[0] != None
+    assert data[1] != None
+    assert data[2] != None
+    assert data[3] != None
+    assert data[4] != None
     

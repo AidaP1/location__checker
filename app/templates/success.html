@@ -18,8 +18,9 @@
         <tbody>
             {% for trip in output%}
             <tr> 
-                <th scope="row">{{ trip }}</th>
-                <td>{{ output[trip] }}</td>
+                <th scope="row">{{ trip.name }}</th>
+                <td>{{ trip.distance }}</td>
+                <td>{{ trip.time }}</td>
             </tr>
     
             {% endfor%}

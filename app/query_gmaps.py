@@ -22,15 +22,17 @@ def call_API(query):
     return trips
 
 def format_response(trips):
-    # turn the json into a dict with relevant info
-    output = {
-    }
+    # turn the json into a dict of dicts with relevant info
+    output = []
     i = 1
     
     for trip in trips['rows'][0]['elements']:
-        key = 'address' + str(i)
-        value = trip['duration']['text']
-        output[key] = value
+        item = {
+            'name': 'address' + str(i),
+            'time': trip['duration']['text'],
+            'distance': trip['distance']['text']
+        }
+        output.append(item)
         i += 1
     
     return output
