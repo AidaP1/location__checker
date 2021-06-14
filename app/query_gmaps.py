@@ -10,7 +10,6 @@ def call_google(query):
         trips = response.json()
         response.raise_for_status()
     except requests.RequestException:
-        print('API failed')
         return None
 
     output = {

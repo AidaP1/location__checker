@@ -2,7 +2,7 @@ from flask import render_template, redirect, request
 from werkzeug.wrappers import response
 
 from app import app
-# from app.query_gmaps import call_google
+from app.query_gmaps import call_google
 
 @app.route('/', methods=["GET", "POST"])
 def index():

@@ -37,8 +37,5 @@ def test_post_index_page():
                                 'key': 'YO31 8HY'},
                                 follow_redirects=True)
         assert response.status_code == 200
-        json_data = response.get_json() (Force = True)
-        assert json_data # broken == None - the functions need to be broken out as the return val doesn't include the json
-        # need to break out the api lookup into another function more module.
-        assert json_data['status'] == "OK"
+        assert b'address1: ' in response.data
         
