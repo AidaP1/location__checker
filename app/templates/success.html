@@ -5,11 +5,25 @@
 {% endblock%}
 
 {% block main %}
+    <h1>Travel Times to your locations</h1>
 
-    {% for trip in output%}
-        <p>{{ trip }}: {{ output[trip] }}</p>
+    <table class="table">
+        <thead>
+            <tr>
+               <th scope="col">Name</th>
+               <th scope="col">Distance</th>
+               <th scope="col">Drive Time</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for trip in output%}
+            <tr> 
+                <th scope="row">{{ trip }}</th>
+                <td>{{ output[trip] }}</td>
+            </tr>
+    
+            {% endfor%}
+        </tbody>
 
-    {% endfor%}
-    <br>
-    {{ trips }}
+    </table>
 {% endblock %}
