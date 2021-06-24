@@ -1,4 +1,4 @@
-from app.admin.admin import log_in, log_out
+from app.admin.admin import log_in, log_out, login_required
 
 def test_login_required():
     assert True == False
