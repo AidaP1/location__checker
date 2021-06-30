@@ -25,7 +25,7 @@ def register():
         elif db.execute('SELECT id FROM user WHERE username = ?', (username,)).fetchone() is not None:
             error = f'Username ${username} is already in use'
         
-        if error is not None:
+        if error is None:
             db.execute('INSERT INTO user (username, pass_hash) VALUES (?, ?)' (username, generate_password_hash(password)))
             db.commit()
             return redirect(url_for('admin.login'))
@@ -55,3 +55,26 @@ def login():
             return redirect(url_for('index'))
     return render_template('admin/login.html')
         
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute('SELECT * FROM user WHERE id = ?', (user_id,)).fetchone()
+
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('admin.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
