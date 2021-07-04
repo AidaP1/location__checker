@@ -11,13 +11,15 @@ bp = Blueprint('index',__name__)
 @login_required
 def index():
     if request.method == "POST":
-        query = {'address1': request.form.get('address1'),
-                'address2': request.form.get('address2'),
-                'address3': request.form.get('address3'),
-                'address4': request.form.get('address4'),
-                'address5': request.form.get('address5'),
-                'key': request.form.get('key')}
-    
+        user_id = session.get('user_id')
+        db = get_db()
+        locations = db.execute('''SELECT name, address FROM user
+                        JOIN location ON user.id = location.user_id
+                        WHERE user.id = ?''', (user_id,)).fetchall()
+        query = {'key': request.form.get('key')}
+        for loc in locations:
+            query[loc['name']] = loc['address']
+        
         output = call_google(query)
 
 

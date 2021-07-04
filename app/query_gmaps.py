@@ -9,7 +9,7 @@ def call_API(query):
         url = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins={query['key']}&destinations="
         # varies with the number of locations user wants to check
         for key in query:
-            if 'address' in key:
+            if 'key' not in key:
                 url = url + f"{query[key]}|"
         url = url.rstrip(str(-1)) + f"&key={api_key}"
         
