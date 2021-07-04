@@ -28,4 +28,7 @@ def create_app(test_config=None):
     from . import admin
     app.register_blueprint(admin.bp)
 
+    from . import index
+    app.register_blueprint(index.bp)
+
     return app

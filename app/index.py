@@ -1,10 +1,14 @@
-from flask import render_template, redirect, request
-from werkzeug.wrappers import response
+from flask import render_template, Blueprint, request, flash, g, redirect, url_for
+from werkzeug.exceptions import abort
 
-from app import app
+from app.admin import login_required
+from app.db import get_db
 from app.query_gmaps import call_google
 
-@app.route('/', methods=["GET", "POST"])
+bp = Blueprint('index',__name__)
+
+@bp.route('/', methods=["GET", "POST"])
+@login_required
 def index():
     if request.method == "POST":
         query = {'address1': request.form.get('address1'),

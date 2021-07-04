@@ -26,7 +26,7 @@ def register():
             error = f'Username ${username} is already in use'
         
         if error is None:
-            db.execute('INSERT INTO user (username, pass_hash) VALUES (?, ?)' (username, generate_password_hash(password)))
+            db.execute('INSERT INTO user (username, pass_hash) VALUES (?, ?)', (username, generate_password_hash(password)))
             db.commit()
             return redirect(url_for('admin.login'))
         # flash stores a message that can be retrieved when generating the template
@@ -42,11 +42,11 @@ def login():
         db = get_db()
         error = None
         
-        login = db.execute('''SELECT id,pass_hash FROM user WHERE username = ?''', (username,))
+        login = db.execute('''SELECT id,pass_hash FROM user WHERE username = ?''', (username,)).fetchone()
 
         if not username:
             error = 'Incorrect Username'
-        elif not check_password_hash(login['password'], password):
+        elif not check_password_hash(login['pass_hash'], password):
             error = 'Incorrect Password'
         
         if error is None:
