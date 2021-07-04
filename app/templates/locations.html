@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Locations
+{% endblock %}
+
+{% block main %}
+    {{ locations }}
+<div class="container">
+    <form method="POST">
+        <h2>Add Location</h2>
+        <input type="text" name="new-loc-name" placeholder="New location name">
+        <input type="text" name="new-loc-adr" placeholder="New Address" required>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+{% endblock %}

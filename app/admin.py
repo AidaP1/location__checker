@@ -46,13 +46,15 @@ def login():
 
         if not username:
             error = 'Incorrect Username'
+        elif not login:
+            error = 'No account exists with that username'
         elif not check_password_hash(login['pass_hash'], password):
             error = 'Incorrect Password'
         
         if error is None:
             session.clear()
             session['user_id'] = login['id']
-            return redirect(url_for('index'))
+            return redirect(url_for('index.index'))
     return render_template('admin/login.html')
         
 @bp.before_app_request
