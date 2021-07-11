@@ -1,3 +1,5 @@
+import os
+
 from flask import render_template, Blueprint, request, flash, g, redirect, url_for, session
 from werkzeug.exceptions import abort
 
@@ -57,4 +59,6 @@ def locations():
     locations = db.execute('''SELECT user.id, name, address FROM user
                                 JOIN location ON user.id = location.user_id
                                 WHERE user.id = ?''', (user_id,)).fetchall()
-    return render_template('locations.html', locations=locations)
+    
+    API_KEY = os.environ.get("API_KEY")
+    return render_template('locations.html', API_KEY=API_KEY, locations=locations)

@@ -4,6 +4,11 @@
     Locations
 {% endblock %}
 
+{% block headfile %}
+    <script defer src="{{url_for('static', filename='locations.js')}}"></script>
+
+{% endblock %}
+
 {% block main %}
 <div class="container">
     <table class="table">
@@ -26,8 +31,11 @@
     <form method="POST">
         <h2>Add Location</h2>
         <input type="text" name="new-loc-name" placeholder="New location name">
-        <input type="text" name="new-loc-adr" placeholder="New Address" required>
+        <input type="text" name="new-loc-adr" placeholder="New Address" id="autocomplete" required>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
+    <script 
+        src="http://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initGoogle">
+    </script>
 </div>
 {% endblock %}
