@@ -34,8 +34,10 @@ def locations():
     user_id = session.get('user_id')
     db = get_db()
     if request.method == "POST":
+        # user submits new location via the form, to be saved in DB
         loc_name = request.form.get('new-loc-name')
         loc_adr = request.form.get('new-loc-adr')
+        # error var used to capture issues
         error = None
 
         if not loc_name:
@@ -55,10 +57,27 @@ def locations():
             db.execute('INSERT INTO location (user_id, name, address) VALUES (?, ?, ?)', (user_id, loc_name, loc_adr,))
             db.commit()
     
-    
+    # get all user locations to render on page
     locations = db.execute('''SELECT user.id, name, address FROM user
                                 JOIN location ON user.id = location.user_id
                                 WHERE user.id = ?''', (user_id,)).fetchall()
     
+    # API key used for google autocomplete
     API_KEY = os.environ.get("API_KEY")
     return render_template('locations.html', API_KEY=API_KEY, locations=locations)
+
+
+@bp.route('/delete', methods=['GET', 'POST'])
+@login_required
+def delete_location():
+    if request.method == "POST":
+        # user has clicked the delete button next to one of their locations
+        user_id = session.get('user_id')
+        db = get_db()
+        loc = request.form.get('loc-name')
+
+        db.execute('''DELETE FROM location
+                    WHERE user_id = ? AND name = ?''', (user_id, loc,))
+        db.commit()
+    return redirect(url_for('index.locations'))
+        

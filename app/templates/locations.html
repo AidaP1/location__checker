@@ -24,6 +24,12 @@
             <tr>
                 <td>{{ location.name }}</td>
                 <td>{{ location.address }}</td>
+                <td>
+                    <form method="POST" action="/delete">
+                        <input name="loc-name" type="hidden" value="{{ location.name }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -35,7 +41,7 @@
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
     <script 
-        src="http://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initGoogle">
+        src="http://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places">
     </script>
 </div>
 {% endblock %}
