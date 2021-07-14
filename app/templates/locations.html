@@ -32,14 +32,27 @@
                 </td>
             </tr>
         {% endfor %}
+            <tr>
+                <th scope="row">Add Location</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <form method="POST" id="new-loc">
+                        <input type="text" name="new-loc-name" placeholder="New location name">
+                    </form>     
+                </td>
+                <td>
+                    <input form="new-loc" type="text" name="new-loc-adr" placeholder="New Address" id="autocomplete" required>
+                </td>
+                <td>
+                    <button form="new-loc" type="submit" class="btn btn-primary">Save</button>
+                </td>
+            </tr>
         </tbody>
     </table>
-    <form method="POST">
-        <h2>Add Location</h2>
-        <input type="text" name="new-loc-name" placeholder="New location name">
-        <input type="text" name="new-loc-adr" placeholder="New Address" id="autocomplete" required>
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+
     <script 
         src="http://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places">
     </script>

@@ -1,5 +1,7 @@
- autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete",
-{
+input = document.getElementById("autocomplete")
+options = {
     componentRestrictions: {country: 'GB'},
-    fields: ['geometry', 'name']
-}));
+    fields: ["geometry", "name"],
+}
+
+autocomplete = new google.maps.places.Autocomplete(input, options);
