@@ -18,21 +18,21 @@ def index():
 @bp.route('/homepage', methods=["GET", "POST"])
 @login_required
 def homepage():
-
+    API_KEY = os.environ.get("API_KEY")
     user_id = session.get('user_id')
     db = get_db()
     locations = db.execute('''SELECT name, address FROM user
                     JOIN location ON user.id = location.user_id
                     WHERE user.id = ?''', (user_id,)).fetchall()
     query = {'key': request.form.get('key')}
-    for loc in locations:
-        query[loc['name']] = loc['address']
     
-    output = call_google(query)
-
-    # API key used for google autocomplete
-    API_KEY = os.environ.get("API_KEY")
-    return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
+    if request.method == "POST":
+        for loc in locations:
+            query[loc['name']] = loc['address']
+        output = call_google(query)
+        return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
+    
+    return render_template("homepage.html", search="search", API_KEY=API_KEY, locations=locations)
 
 @bp.route('/locations', methods=["GET", "POST"])
 @login_required
@@ -64,7 +64,7 @@ def locations():
             db.commit()
     
     
-    return render_template('locations.html', API_KEY=API_KEY, locations=locations)
+    return redirect(url_for('index.homepage'))
 
 
 @bp.route('/delete', methods=['GET', 'POST'])
