@@ -26,7 +26,7 @@ def homepage():
                     WHERE user.id = ?''', (user_id,)).fetchall()
     query = {'key': request.form.get('key')}
     
-    if request.method == "POST":
+    if request.method == "POST" and query is not undefined:
         for loc in locations:
             query[loc['name']] = loc['address']
         output = call_google(query)
@@ -64,7 +64,7 @@ def locations():
             db.commit()
     
     
-    return redirect(url_for('index.homepage'))
+    return redirect(url_for('index.homepage', search=True))
 
 
 @bp.route('/delete', methods=['GET', 'POST'])
