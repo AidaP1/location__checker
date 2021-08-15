@@ -17,6 +17,31 @@
             </form>
         </section>
     </div>
+    {% if search == "search" %}
+    <div>
+        <h1>Travel Times to your locations</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Distance</th>
+                    <th scope="col">Drive Time</th> 
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for trip in output %}
+                <tr> 
+                    <th scope="row">{{ trip.name }}</th>
+                    <td>{{ trip.distance }}</td>
+                    <td>{{ trip.time }}</td>
+                </tr>
+        
+                {% endfor%}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
     <div>
         <h2>Add Location</h2>
         <table class="table">
@@ -47,7 +72,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <form method="POST" id="new-loc">
+                        <form method="POST" id="new-loc" action="/locations">
                             <input type="text" name="new-loc-name" placeholder="New location name">
                         </form>     
                     </td>

@@ -23,23 +23,25 @@ def call_API(query):
 
 def format_response(trips, query):
     # turn the json into a dict of dicts with relevant info
-    output = []
-    keys = []
-    i = 1
+    try:
+        output = []
+        keys = []
+        i = 1
 
-    for key in query:
-        keys.append(key)
-    
-    for trip in trips['rows'][0]['elements']:
-        item = {
-            'name': keys[i],
-            'time': trip['duration']['text'],
-            'distance': trip['distance']['text']
-        }
-        output.append(item)
-        i += 1
-    
-    return output
+        for key in query:
+            keys.append(key)
+        
+        for trip in trips['rows'][0]['elements']:
+            item = {
+                'name': keys[i],
+                'time': trip['duration']['text'],
+                'distance': trip['distance']['text']
+            }
+            output.append(item)
+            i += 1
+        return output
+    except:
+        return None
 
 # give 1 function to be called in the main app
 def call_google(query):

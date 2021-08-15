@@ -24,14 +24,18 @@ def homepage():
     locations = db.execute('''SELECT name, address FROM user
                     JOIN location ON user.id = location.user_id
                     WHERE user.id = ?''', (user_id,)).fetchall()
-    query = {'key': request.form.get('key')}
-    
-    if request.method == "POST" and query is not undefined:
-        for loc in locations:
-            query[loc['name']] = loc['address']
-        output = call_google(query)
-        return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
-    
+    search_query = {'key': request.form.get('key')}
+    output = None
+
+    if request.method == "POST":
+        if search_query['key'] is not None:
+            for loc in locations:
+                search_query[loc['name']] = loc['address']
+            output = call_google(search_query)
+            # return render_template('debug.html', output=output, search_query=search_query)
+            return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
+        
+
     return render_template("homepage.html", search="search", API_KEY=API_KEY, locations=locations)
 
 @bp.route('/locations', methods=["GET", "POST"])
@@ -61,8 +65,7 @@ def locations():
         
         if error == None:
             db.execute('INSERT INTO location (user_id, name, address) VALUES (?, ?, ?)', (user_id, loc_name, loc_adr,))
-            db.commit()
-    
+            db.commit()    
     
     return redirect(url_for('index.homepage', search=True))
 
