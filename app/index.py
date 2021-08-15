@@ -10,23 +10,29 @@ from app.query_gmaps import call_google
 bp = Blueprint('index',__name__)
 
 @bp.route('/', methods=["GET", "POST"])
-@login_required
 def index():
-    if request.method == "POST":
-        user_id = session.get('user_id')
-        db = get_db()
-        locations = db.execute('''SELECT name, address FROM user
-                        JOIN location ON user.id = location.user_id
-                        WHERE user.id = ?''', (user_id,)).fetchall()
-        query = {'key': request.form.get('key')}
-        for loc in locations:
-            query[loc['name']] = loc['address']
-        
-        output = call_google(query)
+        if g.user is None:
+            return render_template('index.html')
+        return redirect(url_for('index.homepage'))
 
+@bp.route('/homepage', methods=["GET", "POST"])
+@login_required
+def homepage():
 
-        return render_template("success.html", output=output)
-    return render_template('index.html')
+    user_id = session.get('user_id')
+    db = get_db()
+    locations = db.execute('''SELECT name, address FROM user
+                    JOIN location ON user.id = location.user_id
+                    WHERE user.id = ?''', (user_id,)).fetchall()
+    query = {'key': request.form.get('key')}
+    for loc in locations:
+        query[loc['name']] = loc['address']
+    
+    output = call_google(query)
+
+    # API key used for google autocomplete
+    API_KEY = os.environ.get("API_KEY")
+    return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
 
 @bp.route('/locations', methods=["GET", "POST"])
 @login_required
@@ -57,13 +63,7 @@ def locations():
             db.execute('INSERT INTO location (user_id, name, address) VALUES (?, ?, ?)', (user_id, loc_name, loc_adr,))
             db.commit()
     
-    # get all user locations to render on page
-    locations = db.execute('''SELECT user.id, name, address FROM user
-                                JOIN location ON user.id = location.user_id
-                                WHERE user.id = ?''', (user_id,)).fetchall()
     
-    # API key used for google autocomplete
-    API_KEY = os.environ.get("API_KEY")
     return render_template('locations.html', API_KEY=API_KEY, locations=locations)
 
 
@@ -79,5 +79,5 @@ def delete_location():
         db.execute('''DELETE FROM location
                     WHERE user_id = ? AND name = ?''', (user_id, loc,))
         db.commit()
-    return redirect(url_for('index.locations'))
+    return redirect(url_for('index.homepage'))
         
