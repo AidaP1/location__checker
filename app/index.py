@@ -32,11 +32,10 @@ def homepage():
             for loc in locations:
                 search_query[loc['name']] = loc['address']
             output = call_google(search_query)
-            # return render_template('debug.html', output=output, search_query=search_query)
             return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
         
 
-    return render_template("homepage.html", search="search", API_KEY=API_KEY, locations=locations)
+    return render_template("homepage.html", API_KEY=API_KEY, locations=locations)
 
 @bp.route('/locations', methods=["GET", "POST"])
 @login_required

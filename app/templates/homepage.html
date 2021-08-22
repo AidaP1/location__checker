@@ -86,10 +86,13 @@
             </tbody>
         </table>
 
-        <script 
-            src="http://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places">
-        </script>
+
     </div>
 </div>
+
+<script src='../static/locations.js'></script>
+<script 
+    src="http://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initAutocomplete">
+</script>
 
 {% endblock %}
