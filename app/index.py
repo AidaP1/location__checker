@@ -9,13 +9,15 @@ from app.query_gmaps import call_google
 
 bp = Blueprint('index',__name__)
 
-@bp.route('/', methods=["GET", "POST"])
+@bp.route('/', methods=["GET"])
+# homepage to display if user logged out
 def index():
         if g.user is None:
             return render_template('index.html')
         return redirect(url_for('index.homepage'))
 
 @bp.route('/homepage', methods=["GET", "POST"])
+# summary page of all locations
 @login_required
 def homepage():
     API_KEY = os.environ.get("API_KEY")
@@ -27,16 +29,17 @@ def homepage():
     search_query = {'key': request.form.get('key')}
     output = None
 
+    # handle searches and new locations
     if request.method == "POST":
+        # search key only populated if there is a search made
         if search_query['key'] is not None:
             for loc in locations:
                 search_query[loc['name']] = loc['address']
             output = call_google(search_query)
             return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
-        
-
     return render_template("homepage.html", API_KEY=API_KEY, locations=locations)
 
+# handle the addition of new locations
 @bp.route('/locations', methods=["GET", "POST"])
 @login_required
 def locations():
@@ -49,6 +52,7 @@ def locations():
         # error var used to capture issues
         error = None
 
+        # Note that errors are not currently displaying on  screen
         if not loc_name:
             error = 'You must enter a location name'
         elif not loc_adr:
@@ -66,7 +70,7 @@ def locations():
             db.execute('INSERT INTO location (user_id, name, address) VALUES (?, ?, ?)', (user_id, loc_name, loc_adr,))
             db.commit()    
     
-    return redirect(url_for('index.homepage', search=True))
+    return redirect(url_for('index.homepage'))
 
 
 @bp.route('/delete', methods=['GET', 'POST'])
