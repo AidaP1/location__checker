@@ -74,6 +74,7 @@ def locations():
 
 
 @bp.route('/delete', methods=['GET', 'POST'])
+# delete a saved address
 @login_required
 def delete_location():
     if request.method == "POST":
