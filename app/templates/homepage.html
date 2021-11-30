@@ -6,19 +6,17 @@
 
 {% block main %}
 <div class="container">
-    <div>
-        <h1>Quick Search</h1>
-        <section>
+    <div class="row gy-5">
+        <h1 class="col-12">Quick Search</h1>
+        <section class="col-12">
             <form method="post" action="">
-
                 <input name="key" type="text" placeholder="key location" required>
-
                 <button class="btn btn-primary" type="submit">Search</button>
             </form>
         </section>
     </div>
     {% if search == "search" %}
-    <div>
+    <div class="row">
         <h1>Travel Times to your locations</h1>
         <table class="table">
             <thead>
@@ -42,9 +40,9 @@
         </table>
     </div>
     {% endif %}
-    <div>
-        <h2>Add Location</h2>
-        <table class="table">
+    <div class="row">
+        <h2 class="col-12">Add Location</h2>
+        <table class="table col-12">
             <thead>
                 <tr>
                     <th scope="col">Name</th>

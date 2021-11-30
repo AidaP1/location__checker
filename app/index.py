@@ -20,6 +20,7 @@ def index():
 # summary page of all locations
 @login_required
 def homepage():
+    page = "locations"
     API_KEY = os.environ.get("API_KEY")
     user_id = session.get('user_id')
     db = get_db()
@@ -37,7 +38,7 @@ def homepage():
                 search_query[loc['name']] = loc['address']
             output = call_google(search_query)
             return render_template("homepage.html", output=output, search="search", API_KEY=API_KEY, locations=locations)
-    return render_template("homepage.html", API_KEY=API_KEY, locations=locations)
+    return render_template("homepage.html", API_KEY=API_KEY, locations=locations, page=page)
 
 # handle the addition of new locations
 @bp.route('/locations', methods=["GET", "POST"])
