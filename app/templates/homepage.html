@@ -5,86 +5,96 @@
 {% endblock %}
 
 {% block main %}
+
 <div class="container">
-    <div class="row gy-5">
-        <h1 class="col-12">Quick Search</h1>
-        <section class="col-12">
-            <form method="post" action="">
-                <input name="key" type="text" placeholder="key location" required>
-                <button class="btn btn-primary" type="submit">Search</button>
-            </form>
-        </section>
+    <div class="col">
+        <!-- Search Bar -->
+        <div class="row gy-5">
+            <h1 class="col-12">Quick Search</h1>
+            <section class="col-12">
+                <form method="post" action="">
+                    <input name="key" type="text" placeholder="key location" required>
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </section>
+        </div>
+        <!-- Search Results -->
+        {% if search == "search" %}
+        <div class="row">
+            <h1>Travel Times to your locations</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Distance</th>
+                        <th scope="col">Drive Time</th> 
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for trip in output %}
+                    <tr> 
+                        <th scope="row">{{ trip.name }}</th>
+                        <td>{{ trip.distance }}</td>
+                        <td>{{ trip.time }}</td>
+                    </tr>
+            
+                    {% endfor%}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
-    {% if search == "search" %}
-    <div class="row">
-        <h1>Travel Times to your locations</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Distance</th>
-                    <th scope="col">Drive Time</th> 
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for trip in output %}
-                <tr> 
-                    <th scope="row">{{ trip.name }}</th>
-                    <td>{{ trip.distance }}</td>
-                    <td>{{ trip.time }}</td>
-                </tr>
-        
-                {% endfor%}
-            </tbody>
-        </table>
-    </div>
-    {% endif %}
-    <div class="row">
-        <h2 class="col-12">Add Location</h2>
-        <table class="table col-12">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for location in locations %}
-                <tr>
-                    <td>{{ location.name }}</td>
-                    <td>{{ location.address }}</td>
-                    <td>
-                        <form method="POST" action="/delete">
-                            <input name="loc-name" type="hidden" value="{{ location.name }}">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-                <tr>
-                    <th scope="row">Add Location</th>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <form method="POST" id="new-loc" action="/locations">
-                            <input type="text" name="new-loc-name" placeholder="New location name">
-                        </form>     
-                    </td>
-                    <td>
-                        <input form="new-loc" type="text" name="new-loc-adr" placeholder="New Address" id="autocomplete" required>
-                    </td>
-                    <td>
-                        <button form="new-loc" type="submit" class="btn btn-primary">Save</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#my-locations" aria-expanded="false" aria-controls="collapseWidthExample">
+        Toggle Locaton collapse
+    </button>    
+    <!-- View your locatoin list and delete any -->
+    <div class="collapse collapse-horizontal" id="my-locations"">
+        <div class="card card-body" style="width: 600px">
+            <h2 class="col-12">Add Location</h2>
+            <table class="table col-12">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for location in locations %}
+                    <tr>
+                        <td>{{ location.name }}</td>
+                        <td>{{ location.address }}</td>
+                        <td>
+                            <form method="POST" action="/delete">
+                                <input name="loc-name" type="hidden" value="{{ location.name }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <!-- add a new location to your list -->
+                    <tr>
+                        <th scope="row">Add Location</th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form method="POST" id="new-loc" action="/locations">
+                                <input type="text" name="new-loc-name" placeholder="New location name">
+                            </form>     
+                        </td>
+                        <td>
+                            <input form="new-loc" type="text" name="new-loc-adr" placeholder="New Address" id="autocomplete" required>
+                        </td>
+                        <td>
+                            <button form="new-loc" type="submit" class="btn btn-primary">Save</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
