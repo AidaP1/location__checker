@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block main %}
-<!-- Button to show the popout of locations -->
-<button style="position: fixed; height:50px; width: auto; z-index: 2; transform: rotate(0.25turn); left:-2.5pc; top: 50vh" type="button" aria-expanded="false" aria-controls="my-locations">
-    My Locations
-</button>
+
 <!-- View your locatoin list and delete any -->
-<div id="my-locations" style="position: fixed;">
-    <div  style="width: 80vw">
-        <h2>Add Location</h2>
+<div id="locations-sidebar" style="position: relative" class="is-closed">
+    <!-- Button to show the popout of locations -->
+    <button id="location-sidebar-toggle" class="is-closed" type="button" aria-expanded="false" aria-controls="my-locations">
+        My Locations
+    </button>
+    <div >
         <table>
             <thead>
                 <tr>
@@ -102,5 +102,6 @@
 <script 
     src="http://maps.googleapis.com/maps/api/js?key={{ API_KEY }}&libraries=places&callback=initAutocomplete">
 </script>
+
 
 {% endblock %}
