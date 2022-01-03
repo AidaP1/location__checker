@@ -20,21 +20,26 @@ body {
   }
   
   #location-sidebar-toggle {
-    position: fixed;
+    position: absolute;
+    top: 30vh;
     z-index: 1;
     border: 4px solid $white;
     outline: none;
-    width: 100px;
-    height: 60px;
-    margin-left: $width__sidebar + 15.5em;
+    width: 60px;
+    height: 100px;
+    margin-left: $width__sidebar + 16.5em;
     background-color: $color__toggle;
     transition: .5s;
-    transform: rotate(0.25turn);
+
+    p {
+        transform: rotate(0.25turn);
+    }
   }
   
   #locations-sidebar {
+    position: fixed;
     width: $width__sidebar;
-    height: 100vh;
+    height: 100pc;
     background-color: $color__sidebar;
     transition: .7s;
     
