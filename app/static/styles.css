@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #253FE1;
+  background-color: #29C7D2;
 }
 
 #location-sidebar-toggle {
@@ -25,6 +25,7 @@ body {
 
 #locations-sidebar {
   position: fixed;
+  left: -2px;
   width: 40em;
   height: 100pc;
   background-color: #fff;

@@ -3,7 +3,7 @@ $white: #fff;
 $main-color: #29C7D2;
 $sub-color: #253FE1;
 
-$color__bg: $sub-color;
+$color__bg: $main-color;
 $color__sidebar: $white;
 $color__toggle: $white;
 
@@ -39,6 +39,7 @@ body {
   
   #locations-sidebar {
     position: fixed;
+    left: -2px;
     width: $width__sidebar;
     height: 100pc;
     background-color: $color__sidebar;
